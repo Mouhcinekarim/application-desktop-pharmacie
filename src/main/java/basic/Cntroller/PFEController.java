@@ -100,5 +100,12 @@ public class PFEController {
     List<ResponsePfeDto>  ListProfPfe(String niveux,String idprof) {
     	return servicepfe.getProfTitre(niveux,idprof);
     }
+    
+    @PutMapping("/updatedescription")
+    void updateDescription(Integer idpfe,@RequestBody String description){
+    	PfeInfo pfe=pfeDao.getById(idpfe);
+    	pfe.setDescription(description);
+    	pfeDao.save(pfe);
+    }
 	
 }
