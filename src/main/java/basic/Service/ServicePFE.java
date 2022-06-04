@@ -23,6 +23,7 @@ import basic.CouchDao.GroupeDao;
 import basic.CouchDao.PfeFichierDao;
 import basic.CouchDao.PfeInfoDao;
 import basic.CouchDao.ProfRepository;
+import basic.Dto.ProfPfeGroupDto;
 import basic.Dto.RequestPfeDto;
 import basic.Dto.ResponsePfeDto;
 import basic.module.Departement;
@@ -131,8 +132,9 @@ public class ServicePFE {
 	
 	
 	
-	 public  void MellangePfe_Group(Integer Anne,String niveux,String id_prif) {
+	 public  List<ProfPfeGroupDto> MellangePfe_Group(Integer Anne,String niveux,String id_prif) {
 		 Prof prof =profdao.findByEmail(id_prif).get();
+		 List<ProfPfeGroupDto> listdto=new ArrayList<ProfPfeGroupDto>();
 		 System.out.println(prof.getNom());
 		    Departement departement=prof.getDepartement();
 			Integer[][] pg=profdao.findProfAndPfe(Anne,niveux,departement);
@@ -160,7 +162,10 @@ public class ServicePFE {
 			
 			System.out.println(listpfegroup.isEmpty());
 			
-			listpfegroup.forEach((p,g)->update(p,g));
+			listpfegroup.forEach((p,g)-> listdto.add(update(p,g)));
+			
+			
+			return listdto;
 		  
 	  }
 	  
@@ -230,17 +235,24 @@ public class ServicePFE {
 		});
 		return max;
 	}
-	  void update(Integer Idpfe,Integer Idgroupe) {
-		  System.out.println(Idpfe+"   "+Idgroupe);
+	  ProfPfeGroupDto update(Integer Idpfe,Integer Idgroupe) {
+		  ProfPfeGroupDto dto=new ProfPfeGroupDto();
+		  System.out.println(Idpfe+"  1 "+Idgroupe);
 			PfeInfo pfe1=pfeDao.findById(Idpfe).get();
 			Groupe groupe=groupedao.findById(Idgroupe).get();
 			
-			
+			dto.setEmail(pfe1.getProf().getEmail());
+			dto.setEtudiant(groupe.getEtudiants());
+			dto.setNom(pfe1.getProf().getNom());
+			dto.setPrenom(pfe1.getProf().getPrenom());
+			dto.setTitre(pfe1.getTitre());
 			pfe1.setGroupe(groupe);
 			groupe.setPfeinfo(pfe1);
 			
 			pfeDao.save(pfe1);
 			groupedao.save(groupe) ;  
+			System.out.println("nom"+dto.getNom());
+			return dto;
 		}
 	
 	  public List<ResponsePfeDto> getProfTitre(String niveux,String idprof) {

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import basic.CouchDao.PfeInfoDao;
+import basic.Dto.ProfPfeGroupDto;
 import basic.Dto.RequestPfeDto;
 import basic.Dto.ResponsePfeDto;
 import basic.Dto.ResponsePfeList;
@@ -89,9 +90,9 @@ public class PFEController {
     }
 	
     @GetMapping("/melange")
-    void mellange(String niveux,String idprof) {
+     List<ProfPfeGroupDto> mellange(String niveux,String idprof) {
     	System.out.println(niveux+" "+idprof);
-    	servicepfe.MellangePfe_Group(Year.now().getValue(), niveux, idprof);
+    	return servicepfe.MellangePfe_Group(Year.now().getValue(), niveux, idprof);
     	
     }
     
