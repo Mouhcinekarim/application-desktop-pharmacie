@@ -39,6 +39,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="prof")
+
 public class Prof implements Serializable {
 	
 	@Id
@@ -56,7 +57,11 @@ public class Prof implements Serializable {
 	
 	
 	
-	private Date created;
+	
+	
+private Instant created;
+	
+    private boolean enabled;
 	
 //    private boolean enabled;
 	//@JsonIgnore

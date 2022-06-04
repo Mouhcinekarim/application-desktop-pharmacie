@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.time.Year;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import basic.CouchDao.PfeInfoDao;
 import basic.Dto.RequestPfeDto;
 import basic.Dto.ResponsePfeDto;
+import basic.Dto.ResponsePfeList;
 import basic.Service.ServicePFE;
 import basic.module.PfeInfo;
 
@@ -36,7 +39,8 @@ public class PFEController {
 	ServicePFE servicepfe;
 	@Autowired
 	PfeInfoDao pfeDao;
-	
+	@Autowired
+    ModelMapper modelMapper;
 	
    @PostMapping(value="")	
    PfeInfo Upload(@RequestBody String  pfe) throws IOException {
@@ -67,12 +71,13 @@ public class PFEController {
     
     @PutMapping("/update")
     void  update(Integer idpfe,@RequestBody String  pfe) throws IOException {
+    
     	 RequestPfeDto pfeDto=new RequestPfeDto();
   	   try {
   		pfeDto= new ObjectMapper().readValue(pfe, RequestPfeDto.class);
 //  		System.out.println(pfeDto.toString());
   		 pfeDto.convert();
-  		 System.out.println(pfeDto.getRapport().length);
+  		
   	} catch (JsonProcessingException e) {
   		// TODO Auto-generated catch block
   		e.printStackTrace();
@@ -106,6 +111,23 @@ public class PFEController {
     	PfeInfo pfe=pfeDao.getById(idpfe);
     	pfe.setDescription(description);
     	pfeDao.save(pfe);
+    }
+    
+    @GetMapping("/PFENoConfirmer")
+	List<ResponsePfeList> PFENoConfirmer(String email){
+    	return  pfeDao.ListPfeNoCofirme(email).stream().map((pfe)->{
+    		ResponsePfeList result=	 modelMapper.map(pfe, ResponsePfeList.class);
+    		result.setGroup(pfe.getGroupe()==null);
+    		return result;
+    	}).toList();
+    	
+    }
+    
+    @DeleteMapping("/deletepfe")
+    void deletePfe(Integer idpfe){
+    	
+    	pfeDao.deleteById(idpfe);
+    	
     }
 	
 }

@@ -96,7 +96,7 @@ public class ServicePFE {
 		    System.out.println("ka");
 			//profdao.save(prof);
 		    Integer idfichier=pfeDao.findById(idpfe).get().getPfefichier().getPfeFichierId();
-		    daofichier.updatefichier(idfichier, pfeinfo.getPfefichier().getPhoto(), pfeinfo.getPfefichier().getRapport());
+		if(pfeinfo.getPfefichier().getRapport()!=null)    daofichier.updatefichier(idfichier, pfeinfo.getPfefichier().getPhoto(), pfeinfo.getPfefichier().getRapport());
 			System.out.println("pass");
 		    pfeDao.updatePfeInfo(idpfe,pfeinfo.getAnne(),pfeinfo.getDescription(),pfeinfo.getNiveau(),pfeinfo.getTitre());
 		    
@@ -123,7 +123,7 @@ public class ServicePFE {
 			
 			
 			
-			
+			System.out.println(pfe.getNiveau());
 			
 			return resdto;
 		}).collect(Collectors.toList());

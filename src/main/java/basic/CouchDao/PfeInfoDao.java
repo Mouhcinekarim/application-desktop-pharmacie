@@ -27,4 +27,7 @@ public interface PfeInfoDao extends JpaRepository<PfeInfo,Integer> {
 	
 	@Query("select p from PfeInfo p where p.niveau=:niveau and p.prof.departement=:departement and p.anne=:year and p.groupe is null and p.conferm=false")
 	List<PfeInfo> findListProfTitre(@Param(value = "niveau")String niveux,@Param(value = "departement")Departement dep,@Param(value = "year")int year);
+
+    @Query("select p from PfeInfo p where p.prof.email=:email and p.conferm=false")
+    List<PfeInfo> ListPfeNoCofirme(@Param(value = "email")String email);
 }

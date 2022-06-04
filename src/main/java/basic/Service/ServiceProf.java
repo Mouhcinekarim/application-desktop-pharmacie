@@ -1,5 +1,6 @@
 package basic.Service;
 
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ServiceProf {
         System.out.println("332");
 		Prof prof=modelMapper.map(profdto, Prof.class);
 		System.out.println("refew");
-		prof.setCreated(new Date());
+		prof.setCreated(Instant.now());
 		Departement departement=departementRepository.findByDepartementId(profdto.getDepartementId()).get();
 		//departement.addProf(prof);
 	//	System.out.println("2"+departement.toString());

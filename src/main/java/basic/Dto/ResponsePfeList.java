@@ -27,7 +27,9 @@ private Integer PfeInfoId;
 	
 	private byte[] photo;
 	   
-	   private byte[] rapport;
+	private boolean isGroup;
+	
+	private byte[] rapport;
 	
 	public void setFichier(PfeFichier fichier) {
 		   this.photo=fichier.getPhoto();

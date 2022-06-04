@@ -1,6 +1,7 @@
 package basic.module;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name="groupe")
 public class Groupe  implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,8 @@ public class Groupe  implements Serializable {
    private String Password;
    private String niveau;
    private Integer Anne;
+	private Instant created;//
+	private boolean isEnabled;//
    @OneToMany(
 		    mappedBy="group",
 			fetch=FetchType.LAZY,
