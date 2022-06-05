@@ -25,8 +25,8 @@ public class PfeFichier implements Serializable {
 	@Column(name="pfe_fichier_id")
 	private Integer pfeFichierId;
 	
-	
+	@Column(columnDefinition="LONGBLOB")
 	private byte[] photo;
-	  
+	@Column(columnDefinition="LONGBLOB")
 	  private byte[] rapport;
 }

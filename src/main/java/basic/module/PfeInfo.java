@@ -37,7 +37,7 @@ public class PfeInfo implements Serializable{
 	private String titre;	
 	
 	private String niveau;	
-	
+	@Column(columnDefinition="TEXT")
 	private String description;
 	
 	private int anne;

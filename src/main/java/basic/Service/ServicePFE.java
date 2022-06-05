@@ -52,28 +52,17 @@ public class ServicePFE {
 	public PfeInfo  Ajouter(RequestPfeDto  pfetdo){
 		
 		Prof prof =profdao.findByEmail(pfetdo.getIdprof()).get();
-		
-	//	System.out.println(prof.toString());
+		System.out.println("stage"+pfetdo.isStage());
 		PfeFichier fichiers=modelMapper.map(pfetdo, PfeFichier.class);
+		
 		PfeInfo    pfeinfo=modelMapper.map(pfetdo, PfeInfo.class);
+		pfeinfo.setStage(pfetdo.isStage());
 		pfeinfo.setPfefichier(fichiers);
-		System.out.println("zizo");
+	  
 		prof.addPfe(pfeinfo);
-		System.out.println("zad");
+		PfeInfo saved=null;
+		 saved =pfeDao.save(pfeinfo);
 		
-		System.out.println("mou");
-	//	System.out.println(pfeinfo);
-	    System.out.println("ka");
-		//profdao.save(prof);
-		System.out.println("fin");
-		PfeInfo saved =pfeDao.save(pfeinfo);
-		
-		ResponsePfeDto respo= modelMapper.map(saved, ResponsePfeDto.class);
-		respo.setPhoto(saved.getPfefichier().getPhoto());
-		respo.setRapport(saved.getPfefichier().getRapport());
-		
-		//System.out.println(respo.toString());
-	   // respo=modelMapper.map(prof, ResponsePfeDto.class);
 		 return saved;
 		
 	}

@@ -42,7 +42,7 @@ public class Message {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "read_date")
     private Date readDate;
-    
+    @Column(columnDefinition="LONGBLOB")
     private byte[] fichier;
     
     @Transient
